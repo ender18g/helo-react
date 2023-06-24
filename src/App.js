@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ChakraProvider, Box, Text, theme, Flex } from '@chakra-ui/react';
+import { ChakraProvider, Box, Text, theme, Flex, Button } from '@chakra-ui/react';
 import { ColorModeSwitcher } from './ColorModeSwitcher';
 import FlightBox from './flightBox';
 import ThrottleBox from './throttleBox';
@@ -10,15 +10,18 @@ function App() {
 	const ceiling = 5000; // ceiling in feet
 
 	const [ data, setData ] = useState({
-		alt: 0.1, // 0-1
+		alt: 0, // 0-1
 		throttle: 0, // 0-100
 		alt_d: 0,
 		alt_dd: 0,
 		refAlt: 3000 / ceiling
 	});
+	const [ showPlot, setShowPlot ] = useState(true);
+
 	const requestRef = useRef();
 	const prevTime = useRef();
 	const throttleRef = useRef(0);
+	const plotData = useRef([]);
 
 	const animate = (time) => {
 		let delta_t;
@@ -28,9 +31,7 @@ function App() {
 		} else {
 			delta_t = 0;
 		}
-
-		delta_t = 0.016;
-
+		// log delta_t if it's too big
 		if (delta_t > 0.02) console.log(delta_t);
 
 		// update previous time
@@ -61,9 +62,17 @@ function App() {
 				alt = 0;
 				if (alt_d < 0) alt_d = 0;
 			}
-
-			//console.log(alt, alt_d, alt_dd);
-			//console.log(delta_t);
+			// if in the air, save data for plotting
+			if (alt > 0)
+				plotData.current.push({
+					alt,
+					altitude: alt * ceiling,
+					refAlt: data.refAlt * ceiling,
+					throttle: throttleRef.current,
+					time: time / 1000
+				});
+			// log the size of the plot data
+			console.log(plotData.current.length);
 
 			return { ...data, alt, alt_d, alt_dd, throttle: throttleRef.current };
 		});
@@ -81,19 +90,28 @@ function App() {
 			{/* Title Box */}
 			<Box
 				color={'white'}
-				fontWeight={100}
+				fontWeight={300}
 				letterSpacing={3}
 				bg={'blue.500'}
 				mx={10}
-				my={4}
+				my={2}
 				borderRadius={'lg'}
-				p={4}
+				p={2}
 				textAlign={'center'}
 			>
-				<Text fontSize="2xl">
-					Helicopter Simulator <ColorModeSwitcher />
+				<Text fontSize="2xl" textShadow={'lg'}>
+					Helicopter Control Simulator <ColorModeSwitcher />
 				</Text>
 			</Box>
+			<Flex w="100%" h="100%" justifyContent={'center'} alignItems={'center'}>
+				<Button
+					onClick={() => {
+						setShowPlot(!showPlot);
+					}}
+				>
+					Toggle Plot
+				</Button>
+			</Flex>
 			{/* 3 panel with throttle, helo and alt info */}
 			<Flex w="100%" h="100%" justifyContent={'center'} alignItems={'center'}>
 				<ThrottleBox
@@ -103,13 +121,14 @@ function App() {
 						throttleRef.current = throttle;
 					}}
 				/>
-				<FlightBox alt={data.alt} height={600} refAlt={data.refAlt} />
+				{showPlot ? (
+					<PlotBox data={plotData.current} />
+				) : (
+					<FlightBox alt={data.alt} height={600} refAlt={data.refAlt} />
+				)}
 				<HudBox alt={data.alt * ceiling} />
 			</Flex>
 			{/* This is the second row of panels */}
-			<Flex mt={20} justifyContent={'center'} alignItems={'center'}>
-				<PlotBox />
-			</Flex>
 		</ChakraProvider>
 	);
 }
