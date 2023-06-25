@@ -19,7 +19,7 @@ function ThrottleBox(props) {
 				<SliderThumb />
 			</Slider>
 			<Text align={'center'} my={2} fontWeight={800}>
-				{throttle}%
+				{Math.round(throttle * 10) / 10}%
 			</Text>
 		</Flex>
 	);
