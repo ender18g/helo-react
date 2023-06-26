@@ -12,6 +12,7 @@ function ThrottleBox(props) {
 				orientation="vertical"
 				minH={300}
 				w={'100%'}
+				step={0.1}
 			>
 				<SliderTrack>
 					<SliderFilledTrack />

@@ -38,15 +38,7 @@ function FlightBox(props) {
 			/>
 
 			{/* THIS IS THE Reference Altitude line */}
-			<Flex
-				h={'2px'}
-				w={'80%'}
-				position={'relative'}
-				left={'-50'}
-				top={ref_val + 25}
-				border={'2px'}
-				borderColor={'orange.300'}
-			/>
+			<Flex h={'2px'} w={'100%'} position={'relative'} left={'-50'} top={ref_val + 25} bg={'orange.300'} />
 		</Flex>
 	);
 }

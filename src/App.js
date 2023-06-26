@@ -143,8 +143,8 @@ function App() {
 						if (data.autoPilot) {
 							// TURNING OFF AUTOPILOT
 							throttleRef.current = 0;
+							setData({ ...data, alt: 0, throttle: 0, autoPilot: false });
 							setShowPlot(true);
-							setData({ ...data, throttle: 0, autoPilot: false });
 							console.log(plotData.current.length);
 						} else {
 							// TURNING ON AUTOPILOT
