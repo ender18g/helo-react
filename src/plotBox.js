@@ -17,8 +17,11 @@ import {
 export default function PlotBox(props) {
 	const { data } = props;
 
+	//remove first data point
+	data.shift();
+
 	//adjust time so that it starts at 0
-	const timeOffset = data.length > 2 ? data[2].time : 0;
+	const timeOffset = data.length > 2 ? data[0].time : 0;
 
 	// go through data and adjust time
 	for (let i = 0; i < data.length; i++) {
@@ -29,25 +32,22 @@ export default function PlotBox(props) {
 		}
 	}
 
-	//trim off last 1 data points
-	data.splice(data.length - 1, 1);
-
 	return (
 		<Flex w={'100vw'} mt={4}>
-			<ResponsiveContainer width={'100%'} height={500}>
+			<ResponsiveContainer width={'100%'} height={600}>
 				<LineChart
 					data={data}
 					margin={{
 						top: 5,
 						right: 10,
-						left: 10,
-						bottom: 5
+						left: 25,
+						bottom: 25
 					}}
 				>
 					<CartesianGrid strokeDasharray="3 3" />
 
 					<XAxis allowDecimals={false} type="number" dataKey="time" interval={'preserveEnd'}>
-						<Label margin="3" value="Time (s)" position="bottom" offset={0} />
+						<Label value="Time (s)" position="bottom" offset={0} />
 					</XAxis>
 					<YAxis>
 						<Label value="Altitude (m)" angle={-90} position="left" offset={0} />

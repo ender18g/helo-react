@@ -28,7 +28,7 @@ function App() {
 	const prevTime = useRef();
 	const throttleRef = useRef(0);
 	const plotData = useRef([ {} ]);
-	const controlGains = useRef({ kp: 1, ki: 1, kd: 1 });
+	const controlGains = useRef({ kp: 3, ki: 0, kd: 0 });
 
 	const animate = (time) => {
 		let delta_t;
@@ -104,10 +104,13 @@ function App() {
 		requestRef.current = requestAnimationFrame(animate);
 	};
 
-	useEffect(() => {
-		requestRef.current = requestAnimationFrame(animate);
-		return () => cancelAnimationFrame(requestRef.current);
-	}, []);
+	useEffect(
+		() => {
+			requestRef.current = requestAnimationFrame(animate);
+			return () => cancelAnimationFrame(requestRef.current);
+		},
+		[ showPlot ]
+	);
 
 	return (
 		<ChakraProvider theme={theme}>
@@ -135,7 +138,6 @@ function App() {
 				{/* BUTTONS TO SHOW PLOT */}
 				<Button
 					mx={3}
-					colorScheme={data.autoPilot ? 'green' : null}
 					onClick={() => {
 						if (data.autoPilot) {
 							// TURNING OFF AUTOPILOT
@@ -164,24 +166,20 @@ function App() {
 						}
 					}}
 				>
-					Autopilot
+					Autopilot {data.autoPilot ? '🟢' : '🔴'}
 				</Button>
 				<Button
 					mx={3}
 					onClick={() => {
+						// if removing plot, clear plot data
+						if (showPlot) plotData.current = [ {} ];
+						else
+							// else set throttle to 0
+							throttleRef.current = 0;
 						setShowPlot(!showPlot);
 					}}
 				>
-					Toggle Plot
-				</Button>
-
-				<Button
-					mx={3}
-					onClick={() => {
-						plotData.current = [ {} ];
-					}}
-				>
-					Clear Plot
+					{showPlot ? 'Hide Plot ❌' : 'View Plot 📈'}
 				</Button>
 			</Flex>
 			{/* 3 panel with throttle, helo and alt info */}
