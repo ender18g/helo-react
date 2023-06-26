@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.js": "/helo-react/static/js/main.dc6d4a4f.js",
+    "main.js": "/helo-react/static/js/main.bf15587c.js",
     "static/js/787.0ad21616.chunk.js": "/helo-react/static/js/787.0ad21616.chunk.js",
     "static/media/sh60.png": "/helo-react/static/media/sh60.8f2475d20a7a82a9e74f.png",
     "index.html": "/helo-react/index.html",
-    "main.dc6d4a4f.js.map": "/helo-react/static/js/main.dc6d4a4f.js.map",
+    "main.bf15587c.js.map": "/helo-react/static/js/main.bf15587c.js.map",
     "787.0ad21616.chunk.js.map": "/helo-react/static/js/787.0ad21616.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.dc6d4a4f.js"
+    "static/js/main.bf15587c.js"
   ]
 }
