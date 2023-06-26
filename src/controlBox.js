@@ -11,29 +11,23 @@ import {
 	InputLeftAddon,
 	Text,
 	Heading,
-	Box
+	Box,
+	Divider
 } from '@chakra-ui/react';
 
 function ControlBox(props) {
 	return (
-		<Box w={'20vw'} mt={8}>
-			<Flex justifyContent={'center'}>
-				<Text align={'center'} size={'sm'}>
-					Controller Settings
+		<Box w={'20vw'} maxW={300} mt={8} boxShadow={'md'} borderRadius={'lg'} p="1" bg={'gray.50'}>
+			<Box justifyContent={'center'}>
+				<Text align={'center'} fontSize={'sm'} fontWeight={700}>
+					Controller
 				</Text>
-			</Flex>
-			<Flex
-				my={3}
-				alignItems={'center'}
-				justifyContent={'center'}
-				wrap={'wrap'}
-				border={'2px'}
-				p={1}
-				borderRadius={'md'}
-			>
+				<Divider size={'lg'} />
+			</Box>
+			<Flex my={3} alignItems={'center'} justifyContent={'center'} wrap={'wrap'} pb={1} borderRadius={'md'}>
 				{/* DESIRED ALTITUDE */}
-				<Flex maxW={'200'} alignItems={'center'} fontWeight={700} flexWrap={'wrap'}>
-					<Text color={'blue.500'} mr={2} align={'center'}>
+				<Flex maxW={'200'} alignItems={'center'} fontWeight={500} flexWrap={'wrap'}>
+					<Text color={'blue.500'} mr={2} textAlign={'center'} fontSize={'sm'}>
 						Desired Altitude:
 					</Text>
 					<NumberInput
@@ -52,8 +46,10 @@ function ControlBox(props) {
 					</NumberInput>
 				</Flex>
 
-				<Flex maxW={'200'} alignItems={'center'} fontWeight={700} flexWrap={'wrap'}>
-					<Text mr={3}>Kp:</Text>
+				<Flex maxW={'200'} alignItems={'center'} fontWeight={500} flexWrap={'wrap'}>
+					<Text fontSize={'sm'} mr={3}>
+						Kp:
+					</Text>
 					<NumberInput
 						value={props.controlGains.current.kp}
 						min={0}
@@ -70,8 +66,10 @@ function ControlBox(props) {
 				</Flex>
 
 				{/* Ki */}
-				<Flex maxW={'200'} alignItems={'center'} fontWeight={700} flexWrap={'wrap'}>
-					<Text mr={3}>Ki:</Text>
+				<Flex maxW={'200'} alignItems={'center'} fontWeight={500} flexWrap={'wrap'}>
+					<Text fontSize={'sm'} mr={3}>
+						Ki:
+					</Text>
 					<NumberInput
 						value={props.controlGains.current.ki}
 						min={0}
@@ -89,8 +87,10 @@ function ControlBox(props) {
 
 				{/* Kd */}
 
-				<Flex maxW={'200'} alignItems={'center'} fontWeight={700} flexWrap={'wrap'}>
-					<Text mr={3}>Kd:</Text>
+				<Flex maxW={'200'} alignItems={'center'} fontWeight={500} flexWrap={'wrap'}>
+					<Text fontSize={'sm'} mr={3}>
+						Kd:
+					</Text>
 					<NumberInput
 						value={props.controlGains.current.kd}
 						min={0}
