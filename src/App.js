@@ -138,6 +138,7 @@ function App() {
 				{/* BUTTONS TO SHOW PLOT */}
 				<Button
 					mx={3}
+					variant={'outline'}
 					onClick={() => {
 						if (data.autoPilot) {
 							// TURNING OFF AUTOPILOT
@@ -171,11 +172,14 @@ function App() {
 				<Button
 					mx={3}
 					onClick={() => {
-						// if removing plot, clear plot data
+						// TURNING PLOT OFF, clear data
 						if (showPlot) plotData.current = [ {} ];
 						else
-							// else set throttle to 0
+							//TURNING PLOT ON, set throttle to 0
 							throttleRef.current = 0;
+						// TURN OFF AUTOPILOT
+						setData({ ...data, throttle: 0, autoPilot: false });
+
 						setShowPlot(!showPlot);
 					}}
 				>
