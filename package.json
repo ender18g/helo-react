@@ -42,5 +42,8 @@
   },
   "devDependencies": {
     "gh-pages": "^5.0.0"
-  }
+  },
+
+"homepage":"https://ender18g.github.io/helo-react/"
+
 }

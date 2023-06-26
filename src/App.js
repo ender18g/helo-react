@@ -115,8 +115,6 @@ function App() {
 				justify={'center'}
 				align={'center'}
 				color={'white'}
-				fontWeight={300}
-				letterSpacing={3}
 				bg={'blue.500'}
 				mx={10}
 				my={2}
@@ -124,11 +122,19 @@ function App() {
 				p={2}
 				textAlign={'center'}
 			>
-				<Text w={'90%'} fontSize="2xl" textShadow={'lg'}>
-					Helicopter Control Simulator
+				<Box w={'10%'} />
+				<Text
+					w={'80%'}
+					color={'gray.300'}
+					fontSize="2xl"
+					textShadow={'lg'}
+					letterSpacing={3.5}
+					fontWeight={100}
+				>
+					HeloSim
 				</Text>
-				<Box alignSelf={'end'} mx={2}>
-					<ColorModeSwitcher />
+				<Box w={'10%'}>
+					<ColorModeSwitcher pr={3} color={'gray.300'} />
 				</Box>
 			</Flex>
 			<Flex w="100%" h="100%" justifyContent={'center'} alignItems={'center'}>
@@ -186,19 +192,21 @@ function App() {
 			</Flex>
 			{/* 3 panel with throttle, helo and alt info */}
 			<Flex w="100%" h="100%" justifyContent={'center'} alignItems={'center'}>
-				<ThrottleBox
-					throttle={data.throttle}
-					setThrottle={(throttle) => {
-						//setData({ ...data, throttle })
-						throttleRef.current = throttle;
-					}}
-				/>
+				<Flex hidden={showPlot ? 1 : 0}>
+					<ThrottleBox
+						throttle={data.throttle}
+						setThrottle={(throttle) => {
+							//setData({ ...data, throttle })
+							throttleRef.current = throttle;
+						}}
+					/>
+				</Flex>
 				{showPlot ? (
 					<PlotBox data={plotData.current} />
 				) : (
 					<FlightBox alt={data.alt} height={600} refAlt={data.refAlt} message={data.message} />
 				)}
-				<Box>
+				<Box hidden={showPlot ? 1 : 0}>
 					<HudBox alt={data.alt * ceiling} />
 					<ControlBox
 						controlGains={controlGains}

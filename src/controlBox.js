@@ -16,13 +16,14 @@ import {
 
 function ControlBox(props) {
 	return (
-		<Box mt={8}>
+		<Box w={'20vw'} mt={8}>
 			<Flex justifyContent={'center'}>
-				<Heading size={'sm'}>Controller Settings</Heading>
+				<Text align={'center'} size={'sm'}>
+					Controller Settings
+				</Text>
 			</Flex>
 			<Flex
 				my={3}
-				w={'25vw'}
 				alignItems={'center'}
 				justifyContent={'center'}
 				wrap={'wrap'}
@@ -32,18 +33,18 @@ function ControlBox(props) {
 			>
 				{/* DESIRED ALTITUDE */}
 				<Flex maxW={'200'} alignItems={'center'} fontWeight={700} flexWrap={'wrap'}>
-					<Text color={'blue.500'} mr={3}>
-						Desired Altitude
+					<Text color={'blue.500'} mr={2} align={'center'}>
+						Desired Altitude:
 					</Text>
 					<NumberInput
-						precision={0}
-						value={props.refAlt}
+						precision={1}
+						value={Math.floor(props.refAlt)}
 						min={1000}
 						max={4500}
 						onChange={props.setRefAlt}
-						step={100}
+						step={100.0}
 					>
-						<NumberInputField />
+						<NumberInputField p={0} />
 						<NumberInputStepper>
 							<NumberIncrementStepper />
 							<NumberDecrementStepper />
@@ -58,7 +59,7 @@ function ControlBox(props) {
 						min={0}
 						max={30}
 						onChange={(val) => (props.controlGains.current = { ...props.controlGains.current, kp: val })}
-						step={0.1}
+						step={1}
 					>
 						<NumberInputField />
 						<NumberInputStepper>
@@ -76,7 +77,7 @@ function ControlBox(props) {
 						min={0}
 						max={20}
 						onChange={(val) => (props.controlGains.current = { ...props.controlGains.current, ki: val })}
-						step={0.1}
+						step={1}
 					>
 						<NumberInputField />
 						<NumberInputStepper>
@@ -95,7 +96,7 @@ function ControlBox(props) {
 						min={0}
 						max={40}
 						onChange={(val) => (props.controlGains.current = { ...props.controlGains.current, kd: val })}
-						step={0.1}
+						step={1}
 					>
 						<NumberInputField />
 						<NumberInputStepper>

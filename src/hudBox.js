@@ -16,9 +16,9 @@ function HudBox(props) {
 				borderColor={'white'}
 				bg={'black'}
 				p={1}
-				w={'25%'}
 				align={'center'}
 				key={index}
+				w={'25%'}
 				fontWeight={800}
 			>
 				{num}
@@ -27,7 +27,7 @@ function HudBox(props) {
 	});
 
 	return (
-		<Flex w={'25vw'} alignItems={'center'} justifyContent={'center'} wrap={'wrap'}>
+		<Flex w={'20vw'} alignItems={'center'} justifyContent={'center'} wrap={'wrap'}>
 			<Flex w={'100%'} maxW={'200px'} justifyContent={'center'}>
 				{altDisplay}
 			</Flex>

@@ -13,7 +13,7 @@ function FlightBox(props) {
 	return (
 		<Flex
 			bg={'blue.100'}
-			w="40vw"
+			w="45vw"
 			height={height}
 			minW="100px"
 			mx={3}

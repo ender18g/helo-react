@@ -29,7 +29,7 @@ export default function PlotBox(props) {
 	data.splice(data.length - 1, 1);
 
 	return (
-		<Flex w={'70vw'}>
+		<Flex w={'100vw'} mt={4}>
 			<ResponsiveContainer width={'100%'} height={500}>
 				<LineChart
 					data={data}
@@ -41,7 +41,7 @@ export default function PlotBox(props) {
 					}}
 				>
 					<CartesianGrid strokeDasharray="3 3" />
-					<XAxis allowDecimals={false} type="number" dataKey="time" interval={'preserveStartEnd'}>
+					<XAxis allowDecimals={false} type="number" dataKey="time" interval={'preserveEnd'}>
 						<Label margin="3" value="Time (s)" position="insideBottom" />
 					</XAxis>
 					<YAxis>
