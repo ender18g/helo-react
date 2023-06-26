@@ -171,15 +171,15 @@ function App() {
 				</Button>
 				<Button
 					mx={3}
+					//hidden={!showPlot && plotData.current.length < 1 ? 1 : 0}
 					onClick={() => {
 						// TURNING PLOT OFF, clear data
 						if (showPlot) plotData.current = [];
 						else
 							//TURNING PLOT ON, set throttle to 0
 							throttleRef.current = 0;
-						// TURN OFF AUTOPILOT
-						setData({ ...data, throttle: 0, autoPilot: false });
-
+						// set alt to 0 and turn off autopilot
+						setData({ ...data, alt: 0, throttle: 0, autoPilot: false });
 						setShowPlot(!showPlot);
 					}}
 				>

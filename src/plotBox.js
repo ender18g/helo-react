@@ -31,16 +31,16 @@ export default function PlotBox(props) {
 	//adjust time so that it starts at 0
 	const timeOffset = data[0].time;
 
-	// go through data and adjust time
-	for (let i = 0; i < data.length; i++) {
-		data[i].time -= timeOffset;
-	}
-
 	return (
 		<Flex w={'100vw'} mt={4}>
 			<ResponsiveContainer width={'100%'} height={600}>
 				<LineChart
-					data={data}
+					data={data.map((point) => {
+						return {
+							...point,
+							time: point.time - timeOffset
+						};
+					})}
 					margin={{
 						top: 5,
 						right: 10,
@@ -50,7 +50,7 @@ export default function PlotBox(props) {
 				>
 					<CartesianGrid strokeDasharray="3 3" />
 
-					<XAxis allowDecimals={false} type="number" dataKey="time" interval={'preserveEnd'}>
+					<XAxis allowDecimals={false} type="number" dataKey="time">
 						<Label value="Time (s)" position="bottom" offset={0} />
 					</XAxis>
 					<YAxis>
