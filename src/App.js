@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ChakraProvider, Box, Text, theme, Flex, Button, useMediaQuery } from '@chakra-ui/react';
 import { ColorModeSwitcher } from './ColorModeSwitcher';
 import FlightBox from './flightBox';
@@ -30,86 +30,101 @@ function App() {
 	const plotData = useRef([]);
 	const controlGains = useRef({ kp: 3, ki: 0, kd: 0 });
 
-	const animate = (time) => {
-		let delta_t;
-		//get delta_t
-		if (prevTime.current) {
-			delta_t = (time - prevTime.current) / 1000;
-		} else {
-			delta_t = 0;
-		}
-		// log delta_t if it's too big
-		if (delta_t > 0.02) console.log(delta_t);
-
-		// update previous time
-		prevTime.current = time;
-
-		setData((data) => {
-			// get throttle control
-			const error = data.refAlt - data.alt;
-			const error_d = error - data.error; // if error_d is positive, we are moving away from the target
-			const error_sum = data.error_sum + error;
-			const kp = controlGains.current.kp;
-			const ki = controlGains.current.ki;
-			const kd = controlGains.current.kd;
-
-			// calculate throttle
-			if (data.autoPilot) {
-				throttleRef.current = 50 + kp * error * 10 + kd * error_d * 300 + ki * error_sum * 0.1;
+	const animate = useCallback(
+		(time) => {
+			let delta_t;
+			//get delta_t
+			if (prevTime.current) {
+				delta_t = (time - prevTime.current) / 1000;
+			} else {
+				delta_t = 0;
+			}
+			// log delta_t if it's too big
+			if (delta_t > 0.02) {
+				console.log('Excessive DELAY', delta_t);
 			}
 
-			// apply throttle limits
-			if (throttleRef.current > 100) throttleRef.current = 100;
-			if (throttleRef.current < 0) throttleRef.current = 0;
+			// update previous time
+			prevTime.current = time;
 
-			//CALCULATE FLIGHT DYNAMICS
-			const m = 10;
-			const k1 = 0.2;
-			const c = -2;
-			const b = -9.81;
-			const w = 5; // nonlinear for altitude
+			setData((data) => {
+				// get throttle control
+				const error = data.refAlt - data.alt;
+				const error_d = error - data.error; // if error_d is positive, we are moving away from the target
+				let error_sum = data.error_sum + error;
+				// don't let error_sum get too big
+				if (error_sum > 10e3) error_sum = 10e3;
+				const kp = controlGains.current.kp;
+				const ki = controlGains.current.ki;
+				const kd = controlGains.current.kd;
 
-			let alt_dd = 1 / m * (k1 * (data.throttle - w * (data.alt + 1) ** 2) + c * data.alt_d + b);
-			//alt_d
-			let alt_d = data.alt_d + data.alt_dd * delta_t;
-			//alt
-			let alt = data.alt + data.alt_d * delta_t;
+				// calculate throttle
+				if (data.autoPilot) {
+					throttleRef.current = 50 + kp * error * 10 + kd * error_d * 300 + ki * error_sum * 0.1;
+				}
 
-			// check altitude limits
-			if (alt > 1) {
-				alt = 1;
-				if (alt_d > 0) alt_d = 0;
-			}
-			if (alt <= 0) {
-				alt = 0;
-				if (alt_d < 0) alt_d = 0;
-			}
+				// apply throttle limits
+				if (throttleRef.current > 100) throttleRef.current = 100;
+				if (throttleRef.current < 0) throttleRef.current = 0;
 
-			// if in the air, save data for plotting
-			if (alt > 0 && !showPlot)
-				plotData.current.push({
-					alt,
-					altitude: alt * ceiling,
-					refAlt: data.refAlt * ceiling,
-					throttle: throttleRef.current,
-					time: time / 1000
-				});
+				//CALCULATE FLIGHT DYNAMICS
+				const m = 10;
+				const k1 = 0.2;
+				const c = -2;
+				const b = -9.81;
+				const w = 5; // nonlinear for altitude
 
-			//if plot data is too long, remove the first element
-			if (plotData.current.length > 2000) plotData.current.shift();
+				let alt_dd = 1 / m * (k1 * (data.throttle - w * (data.alt + 1) ** 2) + c * data.alt_d + b);
+				//alt_d
+				let alt_d = data.alt_d + data.alt_dd * delta_t;
+				//alt
+				let alt = data.alt + data.alt_d * delta_t;
 
-			return { ...data, alt, alt_d, alt_dd, error, error_sum, throttle: throttleRef.current };
-		});
+				// check altitude limits
+				if (alt > 1) {
+					alt = 1;
+					if (alt_d > 0) alt_d = 0;
+				}
+				if (alt <= 0) {
+					alt = 0;
+					if (alt_d < 0) alt_d = 0;
+				}
 
-		requestRef.current = requestAnimationFrame(animate);
-	};
+				// if in the air, save data for plotting
+				if (alt > 0 && !showPlot)
+					plotData.current.push({
+						alt,
+						altitude: alt * ceiling,
+						refAlt: data.refAlt * ceiling,
+						throttle: throttleRef.current,
+						time: time / 1000
+					});
+
+				//if plot data is too long, reset it!
+				if (plotData.current.length > 1000) {
+					console.log('RESET', error_sum);
+					plotData.current = null;
+					plotData.current = [];
+				}
+
+				return { ...data, alt, alt_d, alt_dd, error, error_sum, throttle: throttleRef.current };
+			});
+
+			requestRef.current = requestAnimationFrame(animate);
+		},
+		[ showPlot ]
+	);
 
 	useEffect(
 		() => {
 			requestRef.current = requestAnimationFrame(animate);
-			return () => cancelAnimationFrame(requestRef.current);
+			console.log('request animation frame');
+			return () => {
+				cancelAnimationFrame(requestRef.current);
+				console.log('cancel animation frame');
+			};
 		},
-		[ showPlot ]
+		[ animate ]
 	);
 
 	return (
@@ -192,7 +207,6 @@ function App() {
 					<ThrottleBox
 						throttle={data.throttle}
 						setThrottle={(throttle) => {
-							//setData({ ...data, throttle })
 							throttleRef.current = throttle;
 						}}
 					/>

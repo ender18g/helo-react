@@ -17,7 +17,7 @@ import {
 
 function ControlBox(props) {
 	return (
-		<Box w={'20vw'} maxW={300} mt={8} boxShadow={'md'} borderRadius={'lg'} p="1" bg={'gray.50'}>
+		<Box w={'20vw'} maxW={300} mt={8} boxShadow={'md'} borderRadius={'lg'} p="1">
 			<Box justifyContent={'center'}>
 				<Text align={'center'} fontSize={'sm'} fontWeight={700}>
 					Controller
