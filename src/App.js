@@ -86,7 +86,7 @@ function App() {
 			}
 
 			// if in the air, save data for plotting
-			if (alt > 0)
+			if (alt > 0 && !showPlot)
 				plotData.current.push({
 					alt,
 					altitude: alt * ceiling,
@@ -205,7 +205,7 @@ function App() {
 						message={data.message}
 					/>
 				)}
-				<Box hidden={showPlot ? 1 : 0}>
+				<Box hidden={showPlot && !isDesktop ? 1 : 0}>
 					<HudBox alt={data.alt * ceiling} />
 					<ControlBox
 						controlGains={controlGains}

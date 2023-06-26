@@ -45,16 +45,33 @@ export default function PlotBox(props) {
 					}}
 				>
 					<CartesianGrid strokeDasharray="3 3" />
+
 					<XAxis allowDecimals={false} type="number" dataKey="time" interval={'preserveEnd'}>
-						<Label margin="3" value="Time (s)" position="insideBottom" />
+						<Label margin="3" value="Time (s)" position="bottom" offset={0} />
 					</XAxis>
 					<YAxis>
-						<Label value="Altitude (m)" angle={-90} position="insideLeft" />
+						<Label value="Altitude (m)" angle={-90} position="left" offset={0} />
 					</YAxis>
 					<Tooltip />
-					<Legend />
-					<Line connectNulls type="montone" dataKey="refAlt" stroke="#ED8936" dot={false} strokeWidth={3} />
-					<Line connectNulls type="montone" dataKey="altitude" stroke="#8884d8" dot={false} strokeWidth={3} />
+					<Legend align="right" verticalAlign="top" />
+					<Line
+						connectNulls
+						name="Desired Altitude"
+						type="montone"
+						dataKey="refAlt"
+						stroke="#ED8936"
+						dot={false}
+						strokeWidth={3}
+					/>
+					<Line
+						connectNulls
+						name="Actual Altitude"
+						type="montone"
+						dataKey="altitude"
+						stroke="#8884d8"
+						dot={false}
+						strokeWidth={3}
+					/>
 				</LineChart>
 			</ResponsiveContainer>
 		</Flex>
