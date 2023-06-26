@@ -103,7 +103,6 @@ function App() {
 				//if plot data is too long, reset it!
 				if (plotData.current.length > 1000) {
 					console.log('RESET', error_sum);
-					plotData.current = null;
 					plotData.current = [];
 				}
 
