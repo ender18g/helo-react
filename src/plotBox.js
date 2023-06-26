@@ -23,6 +23,10 @@ export default function PlotBox(props) {
 	// go through data and adjust time
 	for (let i = 0; i < data.length; i++) {
 		data[i].time -= timeOffset;
+		// make sure time is positive
+		if (data[i].time < 0) {
+			data[i].time = 0;
+		}
 	}
 
 	//trim off last 1 data points
@@ -35,8 +39,8 @@ export default function PlotBox(props) {
 					data={data}
 					margin={{
 						top: 5,
-						right: 30,
-						left: 20,
+						right: 10,
+						left: 10,
 						bottom: 5
 					}}
 				>

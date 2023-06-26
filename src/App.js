@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ChakraProvider, Box, Text, theme, Flex, Button } from '@chakra-ui/react';
+import { ChakraProvider, Box, Text, theme, Flex, Button, useMediaQuery } from '@chakra-ui/react';
 import { ColorModeSwitcher } from './ColorModeSwitcher';
 import FlightBox from './flightBox';
 import ThrottleBox from './throttleBox';
@@ -9,6 +9,8 @@ import ControlBox from './controlBox';
 
 function App() {
 	const ceiling = 5000; // ceiling in feet
+	//use media query to determine if mobile
+	const [ isDesktop ] = useMediaQuery('(min-width: 800px)');
 
 	const [ data, setData ] = useState({
 		alt: 0, // 0-1
@@ -22,7 +24,6 @@ function App() {
 		message: ''
 	});
 	const [ showPlot, setShowPlot ] = useState(false);
-
 	const requestRef = useRef();
 	const prevTime = useRef();
 	const throttleRef = useRef(0);
@@ -115,7 +116,7 @@ function App() {
 				justify={'center'}
 				align={'center'}
 				color={'white'}
-				bg={'blue.500'}
+				bg={'blue.700'}
 				mx={10}
 				my={2}
 				borderRadius={'lg'}
@@ -123,18 +124,11 @@ function App() {
 				textAlign={'center'}
 			>
 				<Box w={'10%'} />
-				<Text
-					w={'80%'}
-					color={'gray.300'}
-					fontSize="2xl"
-					textShadow={'lg'}
-					letterSpacing={3.5}
-					fontWeight={100}
-				>
+				<Text w={'80%'} color={'gray.100'} fontSize="2xl" textShadow={'lg'} letterSpacing={6} fontWeight={100}>
 					HeloSim
 				</Text>
 				<Box w={'10%'}>
-					<ColorModeSwitcher pr={3} color={'gray.300'} />
+					<ColorModeSwitcher pr={3} color={'gray.400'} />
 				</Box>
 			</Flex>
 			<Flex w="100%" h="100%" justifyContent={'center'} alignItems={'center'}>
@@ -204,7 +198,12 @@ function App() {
 				{showPlot ? (
 					<PlotBox data={plotData.current} />
 				) : (
-					<FlightBox alt={data.alt} height={600} refAlt={data.refAlt} message={data.message} />
+					<FlightBox
+						alt={data.alt}
+						height={isDesktop ? 800 : 500}
+						refAlt={data.refAlt}
+						message={data.message}
+					/>
 				)}
 				<Box hidden={showPlot ? 1 : 0}>
 					<HudBox alt={data.alt * ceiling} />
