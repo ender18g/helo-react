@@ -27,7 +27,7 @@ function App() {
 	const requestRef = useRef();
 	const prevTime = useRef();
 	const throttleRef = useRef(0);
-	const plotData = useRef([ {} ]);
+	const plotData = useRef([]);
 	const controlGains = useRef({ kp: 3, ki: 0, kd: 0 });
 
 	const animate = (time) => {
@@ -148,7 +148,7 @@ function App() {
 							console.log(plotData.current.length);
 						} else {
 							// TURNING ON AUTOPILOT
-							plotData.current = [ {} ];
+							plotData.current = [];
 							// set alt to 0
 							setData({
 								...data,
@@ -173,7 +173,7 @@ function App() {
 					mx={3}
 					onClick={() => {
 						// TURNING PLOT OFF, clear data
-						if (showPlot) plotData.current = [ {} ];
+						if (showPlot) plotData.current = [];
 						else
 							//TURNING PLOT ON, set throttle to 0
 							throttleRef.current = 0;

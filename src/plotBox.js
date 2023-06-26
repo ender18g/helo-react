@@ -1,6 +1,6 @@
 import React from 'react';
 import { PureComponent } from 'react';
-import { Flex, Heading, Text } from '@chakra-ui/react';
+import { Flex, Heading, Text, Box } from '@chakra-ui/react';
 import {
 	LineChart,
 	Line,
@@ -17,19 +17,23 @@ import {
 export default function PlotBox(props) {
 	const { data } = props;
 
-	//remove first data point
-	data.shift();
+	if (data.length === 0) {
+		return (
+			<Box w={'50vw'} m={4} justifyContent={'center'} alignItems={'center'}>
+				<Heading align={'center'}>No Data</Heading>
+				<Text align={'center'} fontSize={24} fontWeight={300}>
+					Fly the helicopter manually or turn the autopilot ON to collect data.
+				</Text>
+			</Box>
+		);
+	}
 
 	//adjust time so that it starts at 0
-	const timeOffset = data.length > 2 ? data[0].time : 0;
+	const timeOffset = data[0].time;
 
 	// go through data and adjust time
 	for (let i = 0; i < data.length; i++) {
 		data[i].time -= timeOffset;
-		// make sure time is positive
-		if (data[i].time < 0) {
-			data[i].time = 0;
-		}
 	}
 
 	return (
