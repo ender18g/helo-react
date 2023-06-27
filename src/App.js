@@ -91,7 +91,7 @@ function App() {
 				}
 
 				// if in the air, save data for plotting
-				if (alt > 0 && !showPlot)
+				if (alt > 0 && !showPlot && plotData.current.length < 1000)
 					plotData.current.push({
 						alt,
 						altitude: alt * ceiling,
@@ -101,12 +101,12 @@ function App() {
 					});
 
 				//if plot data is too long, reset it!
-				if (plotData.current.length > 1000) {
+				if (plotData.current.length >= 1000) {
 					console.log('RESET', error_sum);
-					plotData.current = [];
+					return { ...data, alt: 0, throttle: 0, autoPilot: false, message: 'Log Full - View plot to reset' };
 				}
 
-				return { ...data, alt, alt_d, alt_dd, error, error_sum, throttle: throttleRef.current };
+				return { ...data, alt, alt_d, alt_dd, error, error_sum, throttle: throttleRef.current, message: '' };
 			});
 
 			requestRef.current = requestAnimationFrame(animate);
@@ -230,6 +230,11 @@ function App() {
 				</Box>
 			</Flex>
 			{/* This is the second row of panels */}
+			<Flex w={'70vw'} justifyContent={'center'} alignItems={'center'} mx={'auto'} mt={'50px'}>
+				<Text color={'red.600'} fontWeight={700}>
+					{data.message}
+				</Text>
+			</Flex>
 		</ChakraProvider>
 	);
 }
