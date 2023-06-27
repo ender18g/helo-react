@@ -5,6 +5,9 @@ function ThrottleBox(props) {
 	const { throttle, setThrottle } = props;
 	return (
 		<Flex justifyContent={'center'} w={'15vw'} wrap={'wrap'}>
+			<Text align={'center'} my={3} fontSize={'sm'} fontWeight={800} w={'100%'}>
+				Throttle
+			</Text>
 			<Slider
 				value={throttle}
 				onChange={(val) => setThrottle(val)}

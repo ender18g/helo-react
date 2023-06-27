@@ -38,7 +38,7 @@ function ControlBox(props) {
 						onChange={props.setRefAlt}
 						step={100.0}
 					>
-						<NumberInputField p={0} />
+						<NumberInputField pl={1} />
 						<NumberInputStepper>
 							<NumberIncrementStepper />
 							<NumberDecrementStepper />
@@ -46,7 +46,7 @@ function ControlBox(props) {
 					</NumberInput>
 				</Flex>
 
-				<Flex maxW={'200'} alignItems={'center'} fontWeight={500} flexWrap={'wrap'}>
+				<Flex maxW={'200'} alignItems={'center'} fontWeight={600} flexWrap={'wrap'}>
 					<Text fontSize={'sm'} mr={3}>
 						Kp:
 					</Text>
@@ -66,7 +66,7 @@ function ControlBox(props) {
 				</Flex>
 
 				{/* Ki */}
-				<Flex maxW={'200'} alignItems={'center'} fontWeight={500} flexWrap={'wrap'}>
+				<Flex maxW={'200'} alignItems={'center'} fontWeight={600} flexWrap={'wrap'}>
 					<Text fontSize={'sm'} mr={3}>
 						Ki:
 					</Text>
@@ -87,7 +87,7 @@ function ControlBox(props) {
 
 				{/* Kd */}
 
-				<Flex maxW={'200'} alignItems={'center'} fontWeight={500} flexWrap={'wrap'}>
+				<Flex maxW={'200'} alignItems={'center'} fontWeight={600} flexWrap={'wrap'}>
 					<Text fontSize={'sm'} mr={3}>
 						Kd:
 					</Text>
