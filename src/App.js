@@ -140,12 +140,15 @@ function App() {
 				p={2}
 				textAlign={'center'}
 			>
-				<Box w={'10%'} />
-				<Text w={'80%'} color={'gray.100'} fontSize="2xl" textShadow={'lg'} letterSpacing={6} fontWeight={100}>
+				<Box w={'20%'} />
+				<Text w={'60%'} color={'gray.100'} fontSize="2xl" textShadow={'lg'} letterSpacing={6} fontWeight={100}>
 					HeloSim
 				</Text>
-				<Box w={'10%'}>
+				<Box w={'20%'}>
 					<ColorModeSwitcher pr={3} color={'gray.400'} />
+					<Text fontSize={isDesktop ? 9 : 7} color={'gray.400'}>
+						Created by Allan Elsberry
+					</Text>
 				</Box>
 			</Flex>
 			<Flex w="100%" h="100%" justifyContent={'center'} alignItems={'center'}>
