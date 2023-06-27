@@ -236,8 +236,8 @@ function App() {
             setRefAlt={(refAlt) => setData({ ...data, refAlt: refAlt / ceiling })}
           />
           <Flex my={2} justifyContent={'center'} align={'center'}>
-            <Text fontSize={'sm'} >Frame rate:</Text>
-            <Text fontSize={'sm'} w={'20%'} fontWeight={700} align={'center'} >{data.frameRate}</Text>
+            <Text fontSize={'sm'} >FPS: </Text>
+            <Text fontSize={'sm'} w={50} fontWeight={700} align={'center'} >{data.frameRate}</Text>
           </Flex>
         </Box>
       </Flex>
