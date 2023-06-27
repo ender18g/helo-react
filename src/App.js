@@ -60,7 +60,7 @@ function App() {
 
 				// calculate throttle
 				if (data.autoPilot) {
-					throttleRef.current = 50 + kp * error * 10 + kd * error_d * 300 + ki * error_sum * 0.1;
+					throttleRef.current = 50 + kp * error * 10 + kd * error_d * 400 + ki * error_sum * 0.02;
 				}
 
 				// apply throttle limits

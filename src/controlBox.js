@@ -52,7 +52,7 @@ function ControlBox(props) {
 					</Text>
 					<NumberInput
 						value={props.controlGains.current.kp}
-						min={0}
+						min={-1}
 						max={30}
 						onChange={(val) => (props.controlGains.current = { ...props.controlGains.current, kp: val })}
 						step={1}
@@ -73,7 +73,7 @@ function ControlBox(props) {
 					<NumberInput
 						value={props.controlGains.current.ki}
 						min={0}
-						max={20}
+						max={30}
 						onChange={(val) => (props.controlGains.current = { ...props.controlGains.current, ki: val })}
 						step={1}
 					>
@@ -94,7 +94,7 @@ function ControlBox(props) {
 					<NumberInput
 						value={props.controlGains.current.kd}
 						min={0}
-						max={40}
+						max={30}
 						onChange={(val) => (props.controlGains.current = { ...props.controlGains.current, kd: val })}
 						step={1}
 					>
