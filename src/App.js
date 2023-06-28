@@ -29,7 +29,7 @@ function App() {
   const throttleRef = useRef(0);
   const plotData = useRef([]);
   const controlGains = useRef({ kp: 3, ki: 0, kd: 0 });
-  const avgT = useRef(0);
+  const avgT = useRef(1 / 60);
 
   const animate = useCallback(
     (time) => {
