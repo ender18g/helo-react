@@ -1,3 +1,12 @@
+## HeloSim
+
+### A web-based PID control simulator demonstrating a helicopter altitude-hold autopilot
+
+#### See the demo: https://ender18g.github.io/helo-react/
+
+![screenshot](screenshot.png)
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
