@@ -1,9 +1,10 @@
 import React from 'react';
-import { Image, Flex } from '@chakra-ui/react';
+import { Image, Flex, Box } from '@chakra-ui/react';
 import helo from './sh60.png';
+import { memo } from 'react';
 
 function FlightBox(props) {
-	const { alt, height, refAlt } = props;
+	const { alt, height, refAlt, isDesktop, message, frameRate } = props;
 
 	// alt is some value between 0 and 1.0 to describe the altitude
 	//const alt = .75;
@@ -12,7 +13,7 @@ function FlightBox(props) {
 
 	return (
 		<Flex
-			bg={'blue.100'}
+			className="flightBox"
 			w="45vw"
 			height={height}
 			minW="100px"
@@ -22,25 +23,40 @@ function FlightBox(props) {
 			textAlign={'center'}
 			borderRadius={'lg'}
 			shadow={'lg'}
+			zIndex={-1}
 		>
 			{/* Helicopter image */}
 			<Image
-				position={'relative'}
+				position={'absolute'}
 				width={'100px'}
 				height={'50px'}
 				aspectRatio={'auto'}
 				src={helo}
-				top={top_val}
-				left={'50%'}
-				transform={'translate(-50%, 00%)'}
+				top={top_val + 10}
 				alt="SH60"
 				zIndex={1}
+				transform={'translate(0%,100%) ' + (isDesktop ? 'scale(1.3)' : 'scale(1.1)')}
 			/>
 
 			{/* THIS IS THE Reference Altitude line */}
-			<Flex h={'2px'} w={'100%'} position={'relative'} left={'-50'} top={ref_val + 25} bg={'orange.300'} />
+			<Flex h={'2px'} w={'150px'} position={'absolute'} top={ref_val + 90} bg={'orange.300'} zIndex={1} />
+			{frameRate > 57 && (
+				<Box
+					position={'absolute'}
+					className="cloud"
+					transform={'translate(-20%,80% ) ' + (isDesktop ? 'scale(0.5)' : 'scale(0)')}
+				/>
+			)}
+
+			{frameRate > 55 && (
+				<Box
+					position={'absolute'}
+					className="cloud"
+					transform={'translate(20%,50% ) ' + (isDesktop ? 'scale(0.5)' : 'scale(0)')}
+				/>
+			)}
 		</Flex>
 	);
 }
 
-export default FlightBox;
+export default memo(FlightBox);
