@@ -10,7 +10,11 @@ import {
 	Alert,
 	AlertIcon,
 	AlertTitle,
-	AlertDescription
+	AlertDescription,
+	Stat,
+	StatLabel,
+	StatNumber,
+	StatHelpText
 } from '@chakra-ui/react';
 import { ColorModeSwitcher } from './ColorModeSwitcher';
 import FlightBox from './flightBox';
@@ -53,7 +57,7 @@ function App() {
 				delta_t = 0;
 			}
 
-			avgT.current = (avgT.current * 49 + delta_t * 1) / 50;
+			avgT.current = (avgT.current * 9 + delta_t * 1) / 10;
 			const frameRate = 1 / avgT.current;
 
 			let message = '';
@@ -266,11 +270,11 @@ function App() {
 						refAlt={data.refAlt * ceiling}
 						setRefAlt={(refAlt) => setData({ ...data, refAlt: refAlt / ceiling })}
 					/>
-					<Flex my={2} justifyContent={'center'} align={'center'}>
-						<Text fontSize={'sm'}>FPS: </Text>
-						<Text fontSize={'sm'} w={50} fontWeight={700} align={'center'}>
-							{data.frameRate}
-						</Text>
+					<Flex my={2} mx={5}>
+						<Stat>
+							<StatLabel>Frame Rate</StatLabel>
+							<StatNumber>{data.frameRate}</StatNumber>
+						</Stat>
 					</Flex>
 				</Box>
 			</Flex>
