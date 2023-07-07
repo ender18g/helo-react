@@ -34,7 +34,7 @@ function FlightBox(props) {
 				src={helo}
 				top={top_val + 10}
 				alt="SH60"
-				zIndex={1}
+				zIndex={3}
 				transform={'translate(0%,100%) ' + (isDesktop ? 'scale(1.3)' : 'scale(1.1)')}
 			/>
 
@@ -45,6 +45,7 @@ function FlightBox(props) {
 					position={'absolute'}
 					className="cloud"
 					transform={'translate(-20%,80% ) ' + (isDesktop ? 'scale(0.5)' : 'scale(0)')}
+					zIndex={2}
 				/>
 			)}
 
@@ -53,6 +54,7 @@ function FlightBox(props) {
 					position={'absolute'}
 					className="cloud"
 					transform={'translate(20%,50% ) ' + (isDesktop ? 'scale(0.5)' : 'scale(0)')}
+					zIndex={4}
 				/>
 			)}
 		</Flex>

@@ -32,7 +32,6 @@
 	background: #fff;
 	content: '';
 	position: absolute;
-	z-indeX: -1;
 }
 
 .cloud:after {
